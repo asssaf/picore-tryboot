@@ -1,4 +1,4 @@
-FROM --platform=linux/arm/v5 debian:stable
+FROM --platform=linux/arm/v6 2023-05-03-raspios-bullseye-armhf-lite
 
 # a static-user qemu binary that allows running the container on x86
 # (the binary is not included in this git repository, build or download your own)
