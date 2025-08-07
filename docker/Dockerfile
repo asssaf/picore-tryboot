@@ -1,9 +1,20 @@
-FROM --platform=linux/arm/v5 debian:stable
+FROM debian:stable AS build
 
-# a static-user qemu binary that allows running the container on x86
-# (the binary is not included in this git repository, build or download your own)
-COPY qemu-arm /usr/bin
+ARG ARCH
 
 RUN apt-get update \
-	&& apt-get install -y build-essential squashfs-tools \
+	&& apt-get install -y build-essential crossbuild-essential-${ARCH} squashfs-tools \
 	&& apt-get clean
+
+ENV CC=${ARCH/armhf/arm-linux-gnueabihf-gcc}
+ENV CC=${CC/arm64/aarch64-linux-gnu-gcc}
+
+ADD Makefile tryboot.c /
+RUN make
+
+
+FROM scratch AS export
+
+COPY --from=build /tryboot.tcz /
+COPY --from=build /tryboot.tcz.list /
+COPY --from=build /tryboot.tcz.md5.txt /

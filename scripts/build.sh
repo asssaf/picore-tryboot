@@ -1,3 +1,1 @@
-docker build -t builder -f docker/Dockerfile .
-
-docker run --rm -it -v $PWD:/mnt -w /mnt -u $(id -u):$(id -g) builder make
+docker build --output type=tar,dest=tryboot.tar --build-arg ARCH=${ARCH} -t builder -f docker/Dockerfile .
