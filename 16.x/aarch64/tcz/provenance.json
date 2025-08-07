@@ -1,0 +1,557 @@
+{
+  "_type": "https://in-toto.io/Statement/v0.1",
+  "predicateType": "https://slsa.dev/provenance/v0.2",
+  "subject": [
+    {
+      "name": "tryboot.tcz",
+      "digest": {
+        "sha256": "45c342ba1524d2bf741ffcb7bf29687bd6b7a90e1b1642e412a68a1c3873374e"
+      }
+    },
+    {
+      "name": "tryboot.tcz.list",
+      "digest": {
+        "sha256": "222fc4e95a9e1df735b7430324516bc501eee023caa7b5535adce275cfde2afb"
+      }
+    },
+    {
+      "name": "tryboot.tcz.md5.txt",
+      "digest": {
+        "sha256": "e5b4643800f786a9401e2821d3144ed423119b8ebf1381ac4d85304e4f71bb97"
+      }
+    }
+  ],
+  "predicate": {
+    "builder": {
+      "id": "https://github.com/asssaf/picore-tryboot/actions/runs/16815890855/attempts/1"
+    },
+    "buildType": "https://mobyproject.org/buildkit@v1",
+    "materials": [
+      {
+        "uri": "pkg:docker/debian@stable?platform=linux%2Famd64",
+        "digest": {
+          "sha256": "de77ae1b03425c79cd5c829687b3db9f1c62e25af09b34aed09f684043f0285a"
+        }
+      },
+      {
+        "uri": "https://github.com/asssaf/picore-tryboot.git#f8215b27aa1705832f561e60c22795aa7b9ce4af",
+        "digest": {
+          "sha1": "f8215b27aa1705832f561e60c22795aa7b9ce4af"
+        }
+      }
+    ],
+    "invocation": {
+      "configSource": {
+        "uri": "https://github.com/asssaf/picore-tryboot.git#f8215b27aa1705832f561e60c22795aa7b9ce4af",
+        "digest": {
+          "sha1": "f8215b27aa1705832f561e60c22795aa7b9ce4af"
+        },
+        "entryPoint": "docker/Dockerfile"
+      },
+      "parameters": {
+        "frontend": "dockerfile.v0",
+        "args": {
+          "build-arg:ARCH": "arm64",
+          "label:org.opencontainers.image.created": "2025-08-07T21:09:37.532Z",
+          "label:org.opencontainers.image.description": "PiCore extension providing tryboot",
+          "label:org.opencontainers.image.licenses": "",
+          "label:org.opencontainers.image.revision": "f8215b27aa1705832f561e60c22795aa7b9ce4af",
+          "label:org.opencontainers.image.source": "https://github.com/asssaf/picore-tryboot",
+          "label:org.opencontainers.image.title": "picore-tryboot",
+          "label:org.opencontainers.image.url": "https://github.com/asssaf/picore-tryboot",
+          "label:org.opencontainers.image.version": "latest",
+          "target": "export"
+        },
+        "secrets": [
+          {
+            "id": "GIT_AUTH_HEADER",
+            "optional": true
+          },
+          {
+            "id": "GIT_AUTH_TOKEN",
+            "optional": true
+          }
+        ]
+      },
+      "environment": {
+        "platform": "linux/amd64"
+      }
+    },
+    "buildConfig": {
+      "llbDefinition": [
+        {
+          "id": "step0",
+          "op": {
+            "Op": {
+              "source": {
+                "identifier": "docker-image://docker.io/library/debian:stable@sha256:de77ae1b03425c79cd5c829687b3db9f1c62e25af09b34aed09f684043f0285a"
+              }
+            },
+            "platform": {
+              "Architecture": "amd64",
+              "OS": "linux"
+            },
+            "constraints": {}
+          }
+        },
+        {
+          "id": "step1",
+          "op": {
+            "Op": {
+              "exec": {
+                "meta": {
+                  "args": [
+                    "/bin/sh",
+                    "-c",
+                    "apt-get update \t\u0026\u0026 apt-get install -y build-essential crossbuild-essential-${ARCH} squashfs-tools \t\u0026\u0026 apt-get clean"
+                  ],
+                  "env": [
+                    "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                    "ARCH=arm64"
+                  ],
+                  "cwd": "/",
+                  "removeMountStubsRecursive": true
+                },
+                "mounts": [
+                  {
+                    "dest": "/"
+                  }
+                ]
+              }
+            },
+            "platform": {
+              "Architecture": "amd64",
+              "OS": "linux"
+            },
+            "constraints": {}
+          },
+          "inputs": [
+            "step0:0"
+          ]
+        },
+        {
+          "id": "step2",
+          "op": {
+            "Op": {
+              "source": {
+                "identifier": "git://github.com/asssaf/picore-tryboot.git#f8215b27aa1705832f561e60c22795aa7b9ce4af",
+                "attrs": {
+                  "git.authheadersecret": "GIT_AUTH_HEADER",
+                  "git.authtokensecret": "GIT_AUTH_TOKEN",
+                  "git.fullurl": "https://github.com/asssaf/picore-tryboot.git"
+                }
+              }
+            },
+            "constraints": {}
+          }
+        },
+        {
+          "id": "step3",
+          "op": {
+            "Op": {
+              "file": {
+                "actions": [
+                  {
+                    "input": 0,
+                    "secondaryInput": 1,
+                    "output": -1,
+                    "Action": {
+                      "copy": {
+                        "src": "/Makefile",
+                        "dest": "/",
+                        "mode": -1,
+                        "followSymlink": true,
+                        "dirCopyContents": true,
+                        "attemptUnpackDockerCompatibility": true,
+                        "createDestPath": true,
+                        "allowWildcard": true,
+                        "allowEmptyWildcard": true,
+                        "timestamp": -1
+                      }
+                    }
+                  },
+                  {
+                    "input": 2,
+                    "secondaryInput": 1,
+                    "output": 0,
+                    "Action": {
+                      "copy": {
+                        "src": "/tryboot.c",
+                        "dest": "/",
+                        "mode": -1,
+                        "followSymlink": true,
+                        "dirCopyContents": true,
+                        "attemptUnpackDockerCompatibility": true,
+                        "createDestPath": true,
+                        "allowWildcard": true,
+                        "allowEmptyWildcard": true,
+                        "timestamp": -1
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "constraints": {}
+          },
+          "inputs": [
+            "step1:0",
+            "step2:0"
+          ]
+        },
+        {
+          "id": "step4",
+          "op": {
+            "Op": {
+              "exec": {
+                "meta": {
+                  "args": [
+                    "/bin/sh",
+                    "-c",
+                    "make"
+                  ],
+                  "env": [
+                    "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                    "ARCH=arm64",
+                    "CC=aarch64-linux-gnu-gcc"
+                  ],
+                  "cwd": "/",
+                  "removeMountStubsRecursive": true
+                },
+                "mounts": [
+                  {
+                    "dest": "/"
+                  }
+                ]
+              }
+            },
+            "platform": {
+              "Architecture": "amd64",
+              "OS": "linux"
+            },
+            "constraints": {}
+          },
+          "inputs": [
+            "step3:0"
+          ]
+        },
+        {
+          "id": "step5",
+          "op": {
+            "Op": {
+              "file": {
+                "actions": [
+                  {
+                    "input": -1,
+                    "secondaryInput": 0,
+                    "output": 0,
+                    "Action": {
+                      "copy": {
+                        "src": "/tryboot.tcz",
+                        "dest": "/",
+                        "mode": -1,
+                        "followSymlink": true,
+                        "dirCopyContents": true,
+                        "createDestPath": true,
+                        "allowWildcard": true,
+                        "allowEmptyWildcard": true,
+                        "timestamp": -1
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "constraints": {}
+          },
+          "inputs": [
+            "step4:0"
+          ]
+        },
+        {
+          "id": "step6",
+          "op": {
+            "Op": {
+              "file": {
+                "actions": [
+                  {
+                    "input": 0,
+                    "secondaryInput": 1,
+                    "output": 0,
+                    "Action": {
+                      "copy": {
+                        "src": "/tryboot.tcz.list",
+                        "dest": "/",
+                        "mode": -1,
+                        "followSymlink": true,
+                        "dirCopyContents": true,
+                        "createDestPath": true,
+                        "allowWildcard": true,
+                        "allowEmptyWildcard": true,
+                        "timestamp": -1
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "constraints": {}
+          },
+          "inputs": [
+            "step5:0",
+            "step4:0"
+          ]
+        },
+        {
+          "id": "step7",
+          "op": {
+            "Op": {
+              "file": {
+                "actions": [
+                  {
+                    "input": 0,
+                    "secondaryInput": 1,
+                    "output": 0,
+                    "Action": {
+                      "copy": {
+                        "src": "/tryboot.tcz.md5.txt",
+                        "dest": "/",
+                        "mode": -1,
+                        "followSymlink": true,
+                        "dirCopyContents": true,
+                        "createDestPath": true,
+                        "allowWildcard": true,
+                        "allowEmptyWildcard": true,
+                        "timestamp": -1
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "constraints": {}
+          },
+          "inputs": [
+            "step6:0",
+            "step4:0"
+          ]
+        },
+        {
+          "id": "step8",
+          "op": {
+            "Op": {}
+          },
+          "inputs": [
+            "step7:0"
+          ]
+        }
+      ],
+      "digestMapping": {
+        "sha256:0a359ab9a991c329487825053ced1bb15fc867099b60a3752e71da1d3189d937": "step4",
+        "sha256:4c0cdee43e25376c278c85d4b056d3a25f9f5b45c9a558d2bd1a8a21d5fc2c17": "step5",
+        "sha256:92f98fb73cd03a1d1f80f0c920f9ef86a12f7ab653a0b399a8404b7023d57fc0": "step7",
+        "sha256:96b3bf2764ff807adfb5300b334f371d8f4240bfec49469ff7806d840fa15ebd": "step0",
+        "sha256:af3c280e046dc77ee5e34e29fd5f7ed784c5b7c23bbb3b90f1c045f318921015": "step1",
+        "sha256:b3be17d156ad0d47b4cd63b379226c815997e15de2dcef29c3865548f23f75f5": "step6",
+        "sha256:c521195da760283ae286e26a93a21ebf11feef9deb49b77b38daed48ccb99d66": "step8",
+        "sha256:eb91b23273c802e95e24d34b9f52212f64360fb398e6cd91ca69dc9f9d772b4c": "step3",
+        "sha256:f947712852ae6a448681ad04be785b975a56ff51cb21f5eae438d33b4937846d": "step2"
+      }
+    },
+    "metadata": {
+      "buildInvocationID": "dzyr4m4th2665it8oub2qr5tm",
+      "buildStartedOn": "2025-08-07T21:09:38.427522007Z",
+      "buildFinishedOn": "2025-08-07T21:10:04.951552623Z",
+      "completeness": {
+        "parameters": true,
+        "environment": true,
+        "materials": true
+      },
+      "reproducible": false,
+      "https://mobyproject.org/buildkit@v1#metadata": {
+        "source": {
+          "locations": {
+            "step0": {
+              "locations": [
+                {
+                  "ranges": [
+                    {
+                      "start": {
+                        "line": 1
+                      },
+                      "end": {
+                        "line": 1
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "step1": {
+              "locations": [
+                {
+                  "ranges": [
+                    {
+                      "start": {
+                        "line": 5
+                      },
+                      "end": {
+                        "line": 5
+                      }
+                    },
+                    {
+                      "start": {
+                        "line": 6
+                      },
+                      "end": {
+                        "line": 6
+                      }
+                    },
+                    {
+                      "start": {
+                        "line": 7
+                      },
+                      "end": {
+                        "line": 7
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "step2": {},
+            "step3": {
+              "locations": [
+                {
+                  "ranges": [
+                    {
+                      "start": {
+                        "line": 12
+                      },
+                      "end": {
+                        "line": 12
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "step4": {
+              "locations": [
+                {
+                  "ranges": [
+                    {
+                      "start": {
+                        "line": 13
+                      },
+                      "end": {
+                        "line": 13
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "step5": {
+              "locations": [
+                {
+                  "ranges": [
+                    {
+                      "start": {
+                        "line": 18
+                      },
+                      "end": {
+                        "line": 18
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "step6": {
+              "locations": [
+                {
+                  "ranges": [
+                    {
+                      "start": {
+                        "line": 19
+                      },
+                      "end": {
+                        "line": 19
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "step7": {
+              "locations": [
+                {
+                  "ranges": [
+                    {
+                      "start": {
+                        "line": 20
+                      },
+                      "end": {
+                        "line": 20
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "infos": [
+            {
+              "filename": "docker/Dockerfile",
+              "language": "Dockerfile",
+              "data": "RlJPTSBkZWJpYW46c3RhYmxlIEFTIGJ1aWxkCgpBUkcgQVJDSAoKUlVOIGFwdC1nZXQgdXBkYXRlIFwKCSYmIGFwdC1nZXQgaW5zdGFsbCAteSBidWlsZC1lc3NlbnRpYWwgY3Jvc3NidWlsZC1lc3NlbnRpYWwtJHtBUkNIfSBzcXVhc2hmcy10b29scyBcCgkmJiBhcHQtZ2V0IGNsZWFuCgpFTlYgQ0M9JHtBUkNIL2FybWhmL2FybS1saW51eC1nbnVlYWJpaGYtZ2NjfQpFTlYgQ0M9JHtDQy9hcm02NC9hYXJjaDY0LWxpbnV4LWdudS1nY2N9CgpBREQgTWFrZWZpbGUgdHJ5Ym9vdC5jIC8KUlVOIG1ha2UKCgpGUk9NIHNjcmF0Y2ggQVMgZXhwb3J0CgpDT1BZIC0tZnJvbT1idWlsZCAvdHJ5Ym9vdC50Y3ogLwpDT1BZIC0tZnJvbT1idWlsZCAvdHJ5Ym9vdC50Y3oubGlzdCAvCkNPUFkgLS1mcm9tPWJ1aWxkIC90cnlib290LnRjei5tZDUudHh0IC8K",
+              "llbDefinition": [
+                {
+                  "id": "step0",
+                  "op": {
+                    "Op": {
+                      "source": {
+                        "identifier": "git://github.com/asssaf/picore-tryboot.git#f8215b27aa1705832f561e60c22795aa7b9ce4af",
+                        "attrs": {
+                          "git.authheadersecret": "GIT_AUTH_HEADER",
+                          "git.authtokensecret": "GIT_AUTH_TOKEN",
+                          "git.fullurl": "https://github.com/asssaf/picore-tryboot.git"
+                        }
+                      }
+                    },
+                    "constraints": {}
+                  }
+                },
+                {
+                  "id": "step1",
+                  "op": {
+                    "Op": {}
+                  },
+                  "inputs": [
+                    "step0:0"
+                  ]
+                }
+              ],
+              "digestMapping": {
+                "sha256:b14e33421b47f2325e16125e282d97b97123a397f6417212ababe872cd8304c6": "step1",
+                "sha256:f947712852ae6a448681ad04be785b975a56ff51cb21f5eae438d33b4937846d": "step0"
+              }
+            }
+          ]
+        },
+        "layers": {
+          "step0:0": [
+            [
+              {
+                "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                "digest": "sha256:714738165c4a3b852b258940cb79f3cc9dd4fc5b1beafc455c5c45962595a83b",
+                "size": 48494618
+              }
+            ]
+          ]
+        }
+      }
+    }
+  }
+}
