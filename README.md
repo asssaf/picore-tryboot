@@ -17,4 +17,4 @@ $ sudo tryboot "0 tryboot"
 ## Building the extension
 On an arm system the extension can just be built using `make`.
 
-On a non arm system a docker build can be done by running `scripts/build.sh`
+On a non arm system a docker build can be done by running `ARCH=arm scripts/build.sh` or `ARCH=arm64 scripts/build.sh`

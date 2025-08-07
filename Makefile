@@ -9,7 +9,7 @@ all: tryboot.tcz.list tryboot.tcz.md5.txt
 
 
 $(BIN): $(SRC)
-	gcc $(STATIC) -I/usr/include -o $(BIN) $(SRC)
+	$(CC) $(STATIC) -I/usr/include -o $(BIN) $(SRC)
 
 
 $(EXTDIR): $(BIN)
